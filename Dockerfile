@@ -26,6 +26,9 @@ RUN cd /opt/src/nginx-1.11.7 && ./configure --prefix=/opt/nginx --with-ld-opt="-
 ADD nginx.conf /etc/nginx.conf
 ADD eth-jsonrpc-access.lua /opt/nginx/eth-jsonrpc-access.lua
 
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+	&& ln -sf /dev/stderr /var/log/nginx/error.log
+
 EXPOSE 80 443
 
 CMD ["/opt/nginx/sbin/nginx", "-c", "/etc/nginx.conf"]
