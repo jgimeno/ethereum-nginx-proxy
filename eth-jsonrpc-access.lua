@@ -1,7 +1,7 @@
-local cjson = require('cjson')
-local http = require "resty.http"
+--local cjson = require('cjson')
+--local http = require "resty.http"
 local ffi = require("ffi")
-local awesome = ffi.load("account")
+local awesome = ffi.load("./awesome.so")
 
 local function empty(s)
   return s == nil or s == ''
