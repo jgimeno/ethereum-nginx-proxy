@@ -29,6 +29,7 @@ RUN cd /opt/src/nginx-1.11.7 && ./configure --prefix=/opt/nginx --with-ld-opt="-
 RUN cd /opt/src/luarocks-3.0.4 && ./configure && make bootstrap
 
 RUN luarocks install lua-resty-http
+RUN luarocks install --server=http://luarocks.org/dev luaffi
 
 ADD nginx.conf /etc/nginx.conf
 ADD eth-jsonrpc-access.lua /opt/nginx/eth-jsonrpc-access.lua

@@ -1,5 +1,7 @@
 local cjson = require('cjson')
 local http = require "resty.http"
+local ffi = require("ffi")
+local awesome = ffi.load("account")
 
 local function empty(s)
   return s == nil or s == ''
@@ -112,6 +114,7 @@ if method == "eth_sendRawTransaction" then
 
         if not res then
             ngx.log(ngx.ERR, "failed to request: ", err)
+            ngx.exit(ngx.HTTP_BAD_REQUEST)
             return
         end
 
