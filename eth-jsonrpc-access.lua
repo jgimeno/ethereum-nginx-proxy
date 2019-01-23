@@ -1,7 +1,32 @@
 local cjson = require('cjson')
 local http = require "resty.http"
 local ffi = require("ffi")
-local awesome = ffi.load("./awesome.so")
+local account = ffi.load("/opt/nginx/account.so")
+
+ffi.cdef([[
+typedef struct { const char *p; ptrdiff_t n; } _GoString_;
+typedef signed char GoInt8;
+typedef unsigned char GoUint8;
+typedef short GoInt16;
+typedef unsigned short GoUint16;
+typedef int GoInt32;
+typedef unsigned int GoUint32;
+typedef long long GoInt64;
+typedef unsigned long long GoUint64;
+typedef GoInt64 GoInt;
+typedef GoUint64 GoUint;
+typedef float GoFloat32;
+typedef double GoFloat64;
+typedef float _Complex GoComplex64;
+typedef double _Complex GoComplex128;
+typedef char _check_for_64_bit_pointer_matching_GoInt[sizeof(void*)==64/8 ? 1:-1];
+typedef _GoString_ GoString;
+typedef void *GoMap;
+typedef void *GoChan;
+typedef struct { void *t; void *v; } GoInterface;
+typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
+extern GoString DeriveSender(GoSlice p0);
+]])
 
 local function empty(s)
   return s == nil or s == ''
@@ -98,8 +123,7 @@ if method == "eth_sendRawTransaction" then
     local data = body['params']
     if data[1] ~= nil then
         -- Get data from code
-        -- txFromAddr = decodeData(data[1])
-        txFromAddr = "0xDed67ef27Aed12610c53471418e87361055Ad548"
+        txFromAddr = account.DeriveSender(data[1])
         ngx.log(ngx.ERR, "decoding data")
     end
 
