@@ -1,5 +1,5 @@
---local cjson = require('cjson')
---local http = require "resty.http"
+local cjson = require('cjson')
+local http = require "resty.http"
 local ffi = require("ffi")
 local awesome = ffi.load("./awesome.so")
 
